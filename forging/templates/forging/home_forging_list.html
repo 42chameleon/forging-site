@@ -1,5 +1,14 @@
-{% include 'base.html' %}
-
+{% extends 'base.html' %}
 {% block content %}
-
+    {% for item in forging %}
+        <div class="col">
+                <div class="card align-content-center">
+                    <img src="{{ item.photo.url }}" width="250" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h1 class="card-title">{{ item.title }}</h1>
+                        <p class="card-text">{{ item.content }}</p>
+                    </div>
+                </div>
+            </div>
+    {% endfor %}
 {% endblock %}
