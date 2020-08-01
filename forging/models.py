@@ -1,9 +1,10 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Forging(models.Model):
     title = models.CharField('Заголовок', max_length=150)
-    content = models.TextField('Описание')
+    content = models.CharField('Номер ковки', max_length=1000,blank=True)
     published_date = models.DateTimeField('Дата публикации', auto_now_add=True)
     is_published = models.BooleanField('Опубликовать', default=False, blank=True)
     photo = models.ImageField('Фото', upload_to='media/')
@@ -21,6 +22,9 @@ class Forging(models.Model):
         verbose_name = 'Ковку'
         verbose_name_plural = 'Кованные изделия'
 
+    def get_absolute_url(self):
+        return reverse('forging', kwargs={"pk": self.pk})
+
 
 class Category(models.Model):
     title = models.CharField('Заголовок', max_length=150)
@@ -32,3 +36,6 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+
+    def get_absolute_url(self):
+        return reverse('category', kwargs={"category_id": self.pk})
