@@ -30,7 +30,6 @@
 <header role="banner">
 
     {% block sidebar %}
-        {% include 'inc/_nav.html' %}
     {% endblock %}
 </header>
 <!-- END header -->
@@ -40,8 +39,8 @@
         <div class="row align-items-center site-hero-inner justify-content-center">
             <div class="col-md-8 text-center">
                 <div class="mb-5 element-animate">
-                    <h1>Kovka-Amzon95</h1>
-                    <p>Кованные изделии на любой вкус</p>
+                    <h1>Kovka.Amzon95</h1>
+                    <p>Кованные изделия на любой вкус</p>
                 </div>
             </div>
         </div>
@@ -52,9 +51,39 @@
 
 <section class="site-section">
     <div class="container">
-        <div class="row">
+        <div class="col-md-9">
             {% block content %}
             {% endblock %}
+            {% if page_obj.has_other_pages %}
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a>
+                            </li>
+                        {% endif %}
+                        {% for p  in page_obj.paginator.page_range %}
+                            {% if page_obj.number == p %}
+                                <li class="page-item active" aria-current="page">
+                                    <a class="page-link " href="?page={{ p }}">{{ p }}
+                                        <span class="sr-only">(current)</span>
+                                    </a>
+                                </li>
+                            {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперед</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+
         </div>
     </div>
 </section>
@@ -64,74 +93,35 @@
 <footer class="site-footer">
     <div class="container">
         <div class="row mb-5">
-            <div class="col-md-4">
-                <h3 class="mb-4">О нас</h3>
-                <p class="mb-4">Подробная информация по телефону</p>
-                <li class="d-flex"><span class="mr-3"><span
-                        class="icon ion-ios-telephone"></span></span><span
-                        class="">+7 928 476 36 83</span>
-                </li>
-                <ul class="list-unstyled ">
-                    <p class="mt-4"><h3>Мы находимся по адресу</h3></p>
-                    <li class="d-flex"><span class="mr-3"><span
-                            class="icon ion-ios-location"></span></span><span
-                            class="">Шалинский район с.Автуры ул.Дадаханова</span></li>
-                </ul>
-            </div>
-            <div class="col-md-2">
-                <h3 class="mb-4">Links</h3>
-                <ul class="list-unstyled ">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Destination</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
             <div class="col-md-3">
-                <h3 class="mb-4">Latest Blog</h3>
-                <ul class="list-unstyled blog-entry-footer">
-                    <li><a href="#">
-                        <span class="post-meta">March 20, 2018</span>
-                        <h3>7 Best Destination in The World</h3></a>
-                    </li>
-                    <li><a href="#">
-                        <span class="post-meta">March 20, 2018</span>
-                        <h3>4 Hour Work Week And The Rest Is Travel</h3></a>
-                    </li>
-                    <li><a href="#">
-                        <span class="post-meta">March 20, 2018</span>
-                        <h3>Why You Should Travel Today</h3></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <h3>Connect</h3>
                 <p>
-                    <a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
-                    <a href="#" class="p-2"><span class="fa fa-twitter"></span></a>
-                    <a href="https://instagram.com/kovka.amazon95?igshid=1nf73qnvrnl04" class="p-2"><span class="fa fa-instagram"></span></a>
+                    <a href="https://instagram.com/kovka.amazon95?igshid=1nf73qnvrnl04" class="p-5">
+                       <h1><span class="fa fa-instagram"></span></h1>
+                    </a>
+                    <h3>Наш: instagram</h3>
                 </p>
             </div>
         </div>
 
-<!-- END footer -->
+        <!-- END footer -->
 
-<!-- loader -->
-<div id="loader" class="show fullscreen">
-    <svg class="circular" width="48px" height="48px">
-        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-                stroke="#f4b214"/>
-    </svg>
-</div>
+        <!-- loader -->
+        <div id="loader" class="show fullscreen">
+            <svg class="circular" width="48px" height="48px">
+                <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+                <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                        stroke="#f4b214"/>
+            </svg>
+        </div>
 
-<script src="{% static 'listed/js/jquery-3.2.1.min.js' %}"></script>
-<script src="{% static 'listed/js/jquery-migrate-3.0.0.js' %}"></script>
-<script src="{% static 'listed/js/popper.min.js' %}"></script>
-<script src="{% static 'listed/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'listed/js/owl.carousel.min.js' %}"></script>
-<script src="{% static 'listed/js/jquery.waypoints.min.js' %}"></script>
-<script src="{% static 'listed/js/jquery.stellar.min.js' %}"></script>
+        <script src="{% static 'listed/js/jquery-3.2.1.min.js' %}"></script>
+        <script src="{% static 'listed/js/jquery-migrate-3.0.0.js' %}"></script>
+        <script src="{% static 'listed/js/popper.min.js' %}"></script>
+        <script src="{% static 'listed/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'listed/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'listed/js/jquery.waypoints.min.js' %}"></script>
+        <script src="{% static 'listed/js/jquery.stellar.min.js' %}"></script>
 
-<script src="{% static 'listed/js/main.js' %}"></script>
+        <script src="{% static 'listed/js/main.js' %}"></script>
 </body>
 </html>
